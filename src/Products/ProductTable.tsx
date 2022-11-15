@@ -2,7 +2,7 @@ import Table from 'react-bootstrap/Table';
 import ProductRow, {IProduct} from "./ProductRow";
 import PaginationBar from "../SystemComponent/PaginationBar";
 import React, {useState} from "react";
-import Row from 'react-bootstrap/Row';
+import Container from "react-bootstrap/Container";
 
 
 function ProductTable(props: any) {
@@ -43,35 +43,36 @@ function ProductTable(props: any) {
     }
 
     return (
-        <div>
-            <Row></Row>
-            <Table striped bordered hover>
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Type</th>
-                    <th>Active</th>
-                    <th>EditItem</th>
-                </tr>
-                </thead>
-                <tbody>
-                {currentRecords.map((product: any) => (
-                    <ProductRow product={product} key={product.id} isEditMode={isEditMode[product.id - 1]}
-                                updateEditItemStatus={UpdateEditItemStatus}
-                                saveProductChanges={SaveProductChanges} cancelProductChanges={CancelProductChanges}
-                                deleteProduct={DeleteProduct}
-                    />
-                ))}
-                </tbody>
-            </Table>
-            <PaginationBar
-                nPages={nPages}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-            />
-        </div>
+        <Container>
+            <div className="justify-content-md-center">
+                <Table striped bordered hover>
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Type</th>
+                        <th>Active</th>
+                        <th>EditItem</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {currentRecords.map((product: any) => (
+                        <ProductRow product={product} key={product.id} isEditMode={isEditMode[product.id - 1]}
+                                    updateEditItemStatus={UpdateEditItemStatus}
+                                    saveProductChanges={SaveProductChanges} cancelProductChanges={CancelProductChanges}
+                                    deleteProduct={DeleteProduct}
+                        />
+                    ))}
+                    </tbody>
+                </Table>
+                <PaginationBar
+                    nPages={nPages}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                />
+            </div>
+        </Container>
     );
 }
 

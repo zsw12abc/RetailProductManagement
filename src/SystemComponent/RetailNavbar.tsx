@@ -1,34 +1,36 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
 import {Link} from "react-router-dom";
 
-function RetailNavBar(props: any) {
+function RetailNavBar() {
+    const NavBrand = {
+        textDecoration: 'none',
+        color: 'Black',
+        fontWeight: 'bold',
+        paddingTop: "0.3rem",
+        paddingBottom: "0.3rem",
+        marginRight: '1rem',
+        marginLeft: '1rem'
+    }
+    const NavLink = {
+        textDecoration: 'none',
+        color: 'gray',
+        paddingTop: "0.3rem",
+        paddingBottom: "0.3rem",
+        marginRight: '0.5rem',
+        marginLeft: '0.5rem'
+    }
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                <Navbar.Brand href="#">Retail Product Management</Navbar.Brand>
+                <Link to={'/'} style={NavBrand}><h4>Retail Product Management</h4></Link>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link  href="/Home">Home</Nav.Link >
-                        <Nav.Link  href="/Product/New">Add New Product</Nav.Link >
-
-                        {/*<Nav.Link href="#link">Link</Nav.Link>*/}
-                        {/*<NavDropdown title="Dropdown" id="basic-nav-dropdown">*/}
-                        {/*    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>*/}
-                        {/*    <NavDropdown.Item href="#action/3.2">*/}
-                        {/*        Another action*/}
-                        {/*    </NavDropdown.Item>*/}
-                        {/*    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>*/}
-                        {/*    <NavDropdown.Divider/>*/}
-                        {/*    <NavDropdown.Item href="#action/3.4">*/}
-                        {/*        Separated link*/}
-                        {/*    </NavDropdown.Item>*/}
-                        {/*</NavDropdown>*/}
+                        <Link style={NavLink} to="/Home">Home</Link>
+                        <Link style={NavLink} to="/Product/New">Add New Product</Link>
                     </Nav>
                 </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end">
@@ -40,3 +42,11 @@ function RetailNavBar(props: any) {
 }
 
 export default RetailNavBar;
+
+// padding-top: var(--bs-navbar-brand-padding-y);
+// padding-bottom: var(--bs-navbar-brand-padding-y);
+// margin-right: var(--bs-navbar-brand-margin-end);
+// font-size: var(--bs-navbar-brand-font-size);
+// color: var(--bs-navbar-brand-color);
+// text-decoration: none;
+// white-space: nowrap;
