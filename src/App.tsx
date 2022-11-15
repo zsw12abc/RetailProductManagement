@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import RetailNavBar from "./SystemComponent/RetailNavbar";
 import ProductTable from "./Products/ProductTable";
+import {IProduct} from "./Products/ProductRow";
+import productTypesDropdown from "./Products/ProductTypesDropdown";
 
 export const productTypes = {
     Books: 'Books',
@@ -10,6 +12,14 @@ export const productTypes = {
     Furniture: 'Furniture',
     Toys: 'Toys',
 }
+
+export const productTypesList = [
+    {name: productTypes.Books},
+    {name: productTypes.Electronics},
+    {name: productTypes.Food},
+    {name: productTypes.Furniture},
+    {name: productTypes.Toys},
+]
 
 
 function App() {
@@ -36,10 +46,28 @@ function App() {
         {id: 20, name: 'Product 20', price: 200, type: productTypes.Electronics, active: true},
     ]
 
+    const [products, setProducts] = useState(productList)
+
+    function saveProductChanges(product: IProduct) {
+        setProducts(prevList => {
+            const prevListCopy = [...prevList]
+            const prevProduct = prevListCopy.find(p => p.id = product.id);
+            if (prevProduct !== undefined) {
+                prevProduct.name = product.name;
+                prevProduct.price = product.price;
+                prevProduct.type = product.type;
+                prevProduct.active = product.active;
+            }
+            console.log("prevList", prevList)
+            console.log("prevListCopy", prevListCopy)
+            return prevListCopy;
+        });
+    }
+
     return (
         <div>
             <RetailNavBar/>
-            <ProductTable productList={productList}/>
+            <ProductTable productList={products} saveProductChanges={saveProductChanges}/>
         </div>
     );
 }
