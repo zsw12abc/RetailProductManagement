@@ -5,7 +5,7 @@ import ProductToggleButton from "./ProductToggleButton";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover'
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
-
+import {Link} from "react-router-dom";
 
 export interface IProductRow {
     product: IProduct
@@ -66,11 +66,11 @@ function ProductRow(props: any) {
         setActive(isActive)
     }
 
-    function UpdatePopover(){
+    function UpdatePopover() {
         setShowPopover(!showPopover)
     }
 
-    function DeleteItem(){
+    function DeleteItem() {
         setShowPopover(false)
         deleteProduct(product.id)
     }
@@ -81,7 +81,7 @@ function ProductRow(props: any) {
             <Popover.Body>
                 <ButtonToolbar className="justify-content-between">
                     <Button variant={"danger"} onClick={DeleteItem}>Yes</Button>
-                    <Button variant={"light"} onClick={()=>setShowPopover(false)}>No</Button>
+                    <Button variant={"light"} onClick={() => setShowPopover(false)}>No</Button>
                 </ButtonToolbar>
             </Popover.Body>
         </Popover>
@@ -89,7 +89,7 @@ function ProductRow(props: any) {
 
     return (
         <tr>
-            <td>{product.id}</td>
+            <td><Link to={"/Product/"+product.id}>{product.id}</Link></td>
             <td hidden={isEditMode}>{product.name}</td>
             <td hidden={!isEditMode}><input type="text" value={name} onChange={e => UpdateName(e.target.value)}/></td>
             <td hidden={isEditMode}>{product.price}</td>

@@ -3,6 +3,9 @@ import './App.css';
 import RetailNavBar from "./SystemComponent/RetailNavbar";
 import ProductTable from "./Products/ProductTable";
 import {IProduct} from "./Products/ProductRow";
+import {Redirect, Route, Switch} from "react-router-dom";
+import ProductDetails from "./Products/ProductDetails";
+
 
 export const productTypes = {
     Books: 'Books',
@@ -13,6 +16,7 @@ export const productTypes = {
 }
 
 export const productTypesList = [
+    {name: "Please Select The Product Type"},
     {name: productTypes.Books},
     {name: productTypes.Electronics},
     {name: productTypes.Food},
@@ -47,15 +51,19 @@ function App() {
 
     const [products, setProducts] = useState(productList)
 
-    function saveProductChanges(product: IProduct) {
+    function SaveProductChanges(product: IProduct) {
         setProducts(prevList => {
             const prevListCopy = [...prevList]
-            const prevProduct = prevListCopy.find(p => p.id = product.id);
+            const prevProduct = prevListCopy.find(p => p.id === product.id);
             if (prevProduct !== undefined) {
+                console.log("updated")
                 prevProduct.name = product.name;
                 prevProduct.price = product.price;
                 prevProduct.type = product.type;
                 prevProduct.active = product.active;
+            }else{
+                console.log("added")
+                prevListCopy.push(product)
             }
             console.log("Update List", prevListCopy)
             return prevListCopy;
@@ -71,6 +79,7 @@ function App() {
                     prevListCopy.splice(index, 1)
                 }
             })
+            console.log('Delete Completed', prevListCopy)
             return prevListCopy;
         });
     }
@@ -78,7 +87,22 @@ function App() {
     return (
         <div>
             <RetailNavBar/>
-            <ProductTable productList={products} saveProductChanges={saveProductChanges} deleteProduct={DeleteProduct}/>
+            <Switch>
+                <Route path={'/'} exact>
+                    <Redirect to={'/Home'}/>
+                </Route>
+                <Route path={"/Product/New"}>
+                    <ProductDetails products={products} saveProductChanges={SaveProductChanges}
+                                    deleteProduct={DeleteProduct}/>
+                </Route>
+                <Route path={"/Product/:productId"}
+                       children={<ProductDetails products={products} saveProductChanges={SaveProductChanges}
+                                                 deleteProduct={DeleteProduct}/>}/>
+                <Route path="/Home">
+                    <ProductTable productList={products} saveProductChanges={SaveProductChanges}
+                                  deleteProduct={DeleteProduct}/>
+                </Route>
+            </Switch>
         </div>
     );
 }
