@@ -3,7 +3,6 @@ import './App.css';
 import RetailNavBar from "./SystemComponent/RetailNavbar";
 import ProductTable from "./Products/ProductTable";
 import {IProduct} from "./Products/ProductRow";
-import productTypesDropdown from "./Products/ProductTypesDropdown";
 
 export const productTypes = {
     Books: 'Books',
@@ -58,8 +57,20 @@ function App() {
                 prevProduct.type = product.type;
                 prevProduct.active = product.active;
             }
-            console.log("prevList", prevList)
-            console.log("prevListCopy", prevListCopy)
+            console.log("Update List", prevListCopy)
+            return prevListCopy;
+        });
+    }
+
+    function DeleteProduct(id: number) {
+        setProducts(prevList => {
+            const prevListCopy = [...prevList]
+            prevListCopy.forEach((item, index) => {
+                if (item.id === id) {
+                    console.log("Try to delete", item)
+                    prevListCopy.splice(index, 1)
+                }
+            })
             return prevListCopy;
         });
     }
@@ -67,7 +78,7 @@ function App() {
     return (
         <div>
             <RetailNavBar/>
-            <ProductTable productList={products} saveProductChanges={saveProductChanges}/>
+            <ProductTable productList={products} saveProductChanges={saveProductChanges} deleteProduct={DeleteProduct}/>
         </div>
     );
 }

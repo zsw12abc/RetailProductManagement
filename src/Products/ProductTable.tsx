@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 
 
 function ProductTable(props: any) {
-    const {productList, saveProductChanges} = props;
+    const {productList, saveProductChanges, deleteProduct} = props;
     const [currentPage, setCurrentPage] = useState(1);
     const [recordsPerPage] = useState(5);
     const indexOfLastRecord = currentPage * recordsPerPage;
@@ -29,12 +29,17 @@ function ProductTable(props: any) {
         UpdateEditMode(id, false)
     }
 
-    function UpdateEditMode(id: number, isEdit: boolean){
+    function UpdateEditMode(id: number, isEdit: boolean) {
         setEditMode(prevState => {
             const prevStateCopy = {...prevState};
             prevStateCopy[id - 1] = isEdit;
             return prevStateCopy;
         });
+    }
+
+    function DeleteProduct(id: number) {
+        console.log("DeleteProduct", id)
+        deleteProduct(id);
     }
 
     return (
@@ -56,6 +61,7 @@ function ProductTable(props: any) {
                     <ProductRow product={product} key={product.id} isEditMode={isEditMode[product.id - 1]}
                                 updateEditItemStatus={UpdateEditItemStatus}
                                 saveProductChanges={SaveProductChanges} cancelProductChanges={CancelProductChanges}
+                                deleteProduct={DeleteProduct}
                     />
                 ))}
                 </tbody>
