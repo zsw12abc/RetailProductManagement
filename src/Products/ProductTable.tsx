@@ -51,7 +51,7 @@ function ProductTable(props: any) {
                         <th>Id</th>
                         <th>Name</th>
                         <th>Price</th>
-                        <th>Type</th>
+                        <th>ProductType</th>
                         <th>Active</th>
                         <th>EditItem</th>
                     </tr>

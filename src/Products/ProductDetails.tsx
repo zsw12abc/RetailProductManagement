@@ -15,7 +15,7 @@ function ProductDetails(props: any) {
     const {products, saveProductChanges, deleteProduct} = props;
     const isNewMode = (Object.keys(params).length === 0)
     // @ts-ignore
-    let product: IProduct = {id: 0, name: undefined, price: undefined, type: undefined, active: undefined};
+    let product: IProduct = {id: 0, name: undefined, price: undefined, productType: undefined, active: undefined};
     if (!isNewMode) {
         product = products.find((p: IProduct) => p.id === +params.productId);
     }
@@ -36,7 +36,7 @@ function ProductDetails(props: any) {
                 id: item.id === 0 ? products.slice(-1)[0].id + 1 : item.id,
                 name: form.elements.fromProductName.value,
                 price: Number(form.elements.formProductPrice.value),
-                type: form.elements.formProductType.value,
+                productType: form.elements.formProductType.value,
                 active: form.elements.formProductActive.checked
             }
             setItem(updateProduct)
@@ -79,7 +79,7 @@ function ProductDetails(props: any) {
                         <Form.Select aria-label="Default Product Type">
                             {productTypesList.map(type => (
                                 <option value={type.name} key={type.name}
-                                        selected={type.name === item.type}
+                                        selected={type.name === item.productType}
                                 >{type.name}</option>
                             ))}
                         </Form.Select>

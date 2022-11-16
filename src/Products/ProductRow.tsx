@@ -15,7 +15,7 @@ export interface IProduct {
     id: number,
     name: string,
     price: number,
-    type: string,
+    productType: string,
     active: boolean
 }
 
@@ -25,7 +25,7 @@ function ProductRow(props: any) {
     const [item, setItem] = useState(product);
     const [name, setName] = useState<string>(item.name);
     const [price, setPrice] = useState<number>(item.price);
-    const [productType, setProductType] = useState(item.type);
+    const [productType, setProductType] = useState(item.productType);
     const [active, setActive] = useState<boolean>(item.active);
     const [showPopover, setShowPopover] = useState<boolean>(false);
 
@@ -38,7 +38,7 @@ function ProductRow(props: any) {
             id: product.id,
             name: name,
             price: price,
-            type: productType,
+            productType: productType,
             active: active,
         };
         setItem(productChanged)
@@ -95,7 +95,7 @@ function ProductRow(props: any) {
             <td hidden={isEditMode}>{product.price}</td>
             <td hidden={!isEditMode}><input type="number" value={price} onChange={e => UpdatePrice(e.target.value)}/>
             </td>
-            <td hidden={isEditMode}>{product.type}</td>
+            <td hidden={isEditMode}>{product.productType}</td>
             <td hidden={!isEditMode}><ProductTypesDropdown currentType={productType}
                                                            updateProductType={UpdateProductType}/></td>
             <td hidden={isEditMode}>{product.active ? '√' : 'X'}</td>
