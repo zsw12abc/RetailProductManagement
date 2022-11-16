@@ -28,6 +28,8 @@ export const productTypesList = [
 
 function App() {
     const [fetchProductList, setProductList] = useState([]);
+    const [fetchProductTypeList, setProductTypeList] = useState([]);
+    const headers = {'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*'};
     const fetchProductListFromDb = () => {
         try {
             const requestOptions = {
@@ -47,11 +49,22 @@ function App() {
         }
     }
 
+    const fetchProductTypeListFromDb = () => {
+        try {
+            axios.get('https://localhost:7260/api/ProductType', {headers}).then(response => {
+                console.log(response.data)
+                setProductTypeList(response.data)
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     useEffect(() => {
+        fetchProductTypeListFromDb();
         fetchProductListFromDb();
     }, [])
 
-    const headers = {'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*'};
 
     function SaveProductChangesViaAPI(product: IProduct) {
         try {
@@ -132,7 +145,7 @@ function App() {
         });
     }
 
-    // console.log(fetchProductList, products)
+    console.log(fetchProductList, fetchProductTypeList)
     //#endregion "LocalData"
 
     return (
