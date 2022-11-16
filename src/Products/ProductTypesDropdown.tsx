@@ -1,9 +1,8 @@
 import Dropdown from 'react-bootstrap/Dropdown';
-import {productTypesList} from "../App";
 import {useState} from "react";
 
 function ProductTypesDropdown(props: any) {
-    const {currentType, updateProductType} = props;
+    const {currentType, updateProductType, productTypes} = props;
     const [type, setType] = useState(currentType);
 
     function UpdateProductType(productName: any) {
@@ -18,9 +17,9 @@ function ProductTypesDropdown(props: any) {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-                {productTypesList.map(product => (
-                    <Dropdown.Item key={product.name} active={currentType === product.name}
-                                   onClick={() => UpdateProductType(product.name)}>{product.name}</Dropdown.Item>
+                {productTypes.map((product:any) => (
+                    <Dropdown.Item key={product.productTypeId} active={currentType === product.productTypeName}
+                                   onClick={() => UpdateProductType(product.productTypeName)}>{product.productTypeName}</Dropdown.Item>
                 ))}
             </Dropdown.Menu>
         </Dropdown>

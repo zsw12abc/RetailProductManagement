@@ -21,7 +21,7 @@ export interface IProduct {
 
 
 function ProductRow(props: any) {
-    const {product, isEditMode, updateEditItemStatus, saveProductChanges, cancelProductChanges, deleteProduct} = props
+    const {product, isEditMode, updateEditItemStatus, saveProductChanges, cancelProductChanges, deleteProduct, productTypes} = props
     const [item, setItem] = useState(product);
     const [name, setName] = useState<string>(item.name);
     const [price, setPrice] = useState<number>(item.price);
@@ -42,7 +42,6 @@ function ProductRow(props: any) {
             active: active,
         };
         setItem(productChanged)
-        console.log(productChanged)
         saveProductChanges(productChanged);
     }
 
@@ -96,7 +95,7 @@ function ProductRow(props: any) {
             <td hidden={!isEditMode}><input type="number" value={price} onChange={e => UpdatePrice(e.target.value)}/>
             </td>
             <td hidden={isEditMode}>{product.productType}</td>
-            <td hidden={!isEditMode}><ProductTypesDropdown currentType={productType}
+            <td hidden={!isEditMode}><ProductTypesDropdown productTypes={productTypes} currentType={productType}
                                                            updateProductType={UpdateProductType}/></td>
             <td hidden={isEditMode}>{product.active ? '√' : 'X'}</td>
             <td hidden={!isEditMode}><ProductToggleButton currentActive={active} updateActive={UpdateActive}/></td>

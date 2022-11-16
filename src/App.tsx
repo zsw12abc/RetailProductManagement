@@ -52,7 +52,6 @@ function App() {
     const fetchProductTypeListFromDb = () => {
         try {
             axios.get('https://localhost:7260/api/ProductType', {headers}).then(response => {
-                console.log(response.data)
                 setProductTypeList(response.data)
             })
         } catch (e) {
@@ -118,7 +117,6 @@ function App() {
             const prevListCopy = [...prevList]
             const prevProduct = prevListCopy.find(p => p.id === product.id);
             if (prevProduct !== undefined) {
-                console.log("updated")
                 prevProduct.name = product.name;
                 prevProduct.price = product.price;
                 prevProduct.productType = product.productType;
@@ -145,7 +143,7 @@ function App() {
         });
     }
 
-    console.log(fetchProductList, fetchProductTypeList)
+    // console.log(fetchProductList, fetchProductTypeList)
     //#endregion "LocalData"
 
     return (
@@ -156,15 +154,15 @@ function App() {
                     <Redirect to={'/Home'}/>
                 </Route>
                 <Route path={"/Product/New"}>
-                    <ProductDetails products={fetchProductList} saveProductChanges={SaveProductChangesViaAPI}
+                    <ProductDetails products={fetchProductList} productTypes={fetchProductTypeList} saveProductChanges={SaveProductChangesViaAPI}
                                     deleteProduct={DeleteProductChangesViaAPI}/>
                 </Route>
                 <Route path={"/Product/:productId"}
-                       children={<ProductDetails products={fetchProductList}
+                       children={<ProductDetails products={fetchProductList} productTypes={fetchProductTypeList}
                                                  saveProductChanges={SaveProductChangesViaAPI}
                                                  deleteProduct={DeleteProductChangesViaAPI}/>}/>
                 <Route path="/Home">
-                    <ProductTable productList={fetchProductList} saveProductChanges={SaveProductChangesViaAPI}
+                    <ProductTable productList={fetchProductList} productTypes={fetchProductTypeList} saveProductChanges={SaveProductChangesViaAPI}
                                   deleteProduct={DeleteProductChangesViaAPI}/>
                 </Route>
             </Switch>

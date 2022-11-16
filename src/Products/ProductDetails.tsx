@@ -2,7 +2,6 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import React, {useState} from "react";
 import {IProduct} from "./ProductRow";
-import {productTypesList} from "../App";
 import InputGroup from 'react-bootstrap/InputGroup';
 import {useHistory, useParams} from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
@@ -12,7 +11,7 @@ import Container from "react-bootstrap/Container";
 function ProductDetails(props: any) {
     const history = useHistory();
     const params = useParams<{ productId: string }>();
-    const {products, saveProductChanges, deleteProduct} = props;
+    const {products, saveProductChanges, deleteProduct, productTypes} = props;
     const isNewMode = (Object.keys(params).length === 0)
     // @ts-ignore
     let product: IProduct = {id: 0, name: undefined, price: undefined, productType: undefined, active: undefined};
@@ -77,10 +76,10 @@ function ProductDetails(props: any) {
                     <Form.Group className="mb-3" controlId="formProductType">
                         <Form.Label>Type</Form.Label>
                         <Form.Select aria-label="Default Product Type">
-                            {productTypesList.map(type => (
-                                <option value={type.name} key={type.name}
-                                        selected={type.name === item.productType}
-                                >{type.name}</option>
+                            {productTypes.map((type:any) => (
+                                <option value={type.productTypeName} key={type.productTypeId}
+                                        selected={type.productTypeName === item.productType}
+                                >{type.productTypeName}</option>
                             ))}
                         </Form.Select>
                     </Form.Group>
