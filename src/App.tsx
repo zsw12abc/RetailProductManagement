@@ -5,6 +5,7 @@ import ProductTable from "./Products/ProductTable";
 import {IProduct} from "./Products/ProductRow";
 import {Redirect, Route, Switch} from "react-router-dom";
 import ProductDetails from "./Products/ProductDetails";
+import axios from "axios";
 
 
 export const productTypes = {
@@ -29,13 +30,14 @@ function App() {
     const [fetchProductList, setProductList] = useState([]);
     const fetchProductListFromDb = () => {
         try {
-            fetch('https://localhost:7260/api/Product', {
+            const requestOptions = {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*',
                 },
-            }).then(response => {
+            }
+            fetch('https://localhost:7260/api/Product', requestOptions).then(response => {
                 return response.json();
             }).then(data => {
                 setProductList(data)
@@ -49,38 +51,23 @@ function App() {
         fetchProductListFromDb();
     }, [])
 
+    const headers = {'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*'};
+
     function SaveProductChangesViaAPI(product: IProduct) {
-        console.log('JSON', JSON.stringify(product))
-        const requestOptions = {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(product)
-        };
         try {
-            fetch('https://localhost:7260/api/Product', requestOptions).then(response => {
-                return response.json();
-            }).then(data => {
-                console.log(data)
-                fetchProductListFromDb();
+            axios.put('https://localhost:7260/api/Product', JSON.stringify(product), {headers}).then(r => {
+                fetchProductListFromDb()
             })
         } catch (e) {
             console.log(e)
         }
+
     }
 
     function DeleteProductChangesViaAPI(id: number) {
         try {
-            fetch('https://localhost:7260/api/Product/' + id, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                }
-            }).then(response => {
-                return response.json();
-            }).then(data => {
-                console.log(data)
-                fetchProductListFromDb();
+            axios.delete('https://localhost:7260/api/Product?id=' + id, {headers}).then(r => {
+                fetchProductListFromDb()
             })
         } catch (e) {
             console.log(e)
